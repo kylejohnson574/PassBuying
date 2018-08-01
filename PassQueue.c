@@ -1,4 +1,5 @@
 #include "PassQueue.h"
+#include <stdlib.h>
 
 //Create a new queue for storing passes
 // Return 0 if unsuccessful otherwise pointer to a new queue
@@ -114,17 +115,53 @@ unsigned short removeItem( pass_queue *queue, unsigned long id)
 {
 	unsigned short bRemoved = 0;
 	pass_entry *pItem = findItem( queue, id );
-	if( pItem != 0 )
+	if( (pItem != 0) && queue )
 	{
-		free(pItem->pEntry);
+		if( pItem->pEntry )
+		{
+			if( pItem->pEntry->pPassData )
+			{
+				if(pItem->pEntry->ulTypeOfPass == MONTHLY )
+				{
+					free((monthly_pass *)pItem->pEntry->pPassData);
+				}
+				else
+				{
+					free((pay_per_ride_pass *)pItem->pEntry->pPassData);
+				}
+
+			}
+			free((pass *)pItem->pEntry);
+			
+		}
 		
-		if( pItem->pNextEntry != 0 )
+		if( (pItem->pNextEntry != 0) && (pItem->pPrevEntry != 0) )
 		{
 			((pass_entry *)pItem->pPrevEntry)->pNextEntry = pItem->pNextEntry;
+                        ((pass_entry *)pItem->pNextEntry)->pPrevEntry = pItem->pPrevEntry;
+		}
+		if( (pItem->pNextEntry != 0) && (pItem->pPrevEntry == 0) )
+		{
+			 queue->pQueueFront = pItem->pNextEntry;
+			((pass_entry *)pItem->pNextEntry)->pPrevEntry = 0;
 		}
 		else
 		{
-			((pass_entry *)pItem->pPrevEntry)->pNextEntry = 0;
+			if( pItem->pPrevEntry == 0 )
+			{
+				queue->pQueueFront = 0;
+			}
+			else 
+			{
+				((pass_entry *)pItem->pPrevEntry)->pNextEntry = 0;
+			}
+		}
+
+		if (entry == pItem)
+		{
+			//Current interator is the same as the pass getting
+			//freed then set it to zero
+			entry = 0x00;
 		}
 
 		free(pItem);

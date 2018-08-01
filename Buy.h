@@ -1,7 +1,7 @@
 #ifndef _BUY_H_
 #define _BUY_H_
 
-#include "PassBuying\PassBuying\Costs.h"
+#include "Costs.h"
 #include "PassDef.h"
 
 //Function to "buy" a pass which fills out a new per ride pass and 

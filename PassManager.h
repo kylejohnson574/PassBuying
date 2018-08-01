@@ -34,4 +34,6 @@ extern void removePerRideEntry(unsigned long id);
 
 extern unsigned long getNextMonthlyId();
 extern unsigned long getNextPerRideId();
+
+extern void destroy();
 #endif

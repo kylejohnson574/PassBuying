@@ -1,4 +1,5 @@
 #include "PassManager.h"
+#include <stdlib.h>
 /*
 	This implementation of the backend is just a basic
 	queue system that holds the added passes. That is 
@@ -163,4 +164,30 @@ unsigned long getNextPerRideId()
 	unsigned long ul;
 	ul = ((perMonthlyId << 1));
     return ul;
+}
+
+void destroy()
+{
+	pass *pCurrent = getNextMonthlyEntry();
+        while( pCurrent )
+	{
+		removeMonthlyEntry(pCurrent->ulID);
+		pCurrent = getNextMonthlyEntry();
+	}
+	
+	pCurrent = getNextPerRideEntry();
+	while( pCurrent )
+	{
+		removePerRideEntry(pCurrent->ulID);
+		pCurrent = getNextPerRideEntry();
+	}
+	
+	if( monthly_queue )
+	{
+		free(monthly_queue);
+	}
+	if( perRide_queue )
+	{
+		free(perRide_queue);
+	}
 }
