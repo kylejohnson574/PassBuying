@@ -12,7 +12,7 @@ int buyPerRidePass(unsigned int uiTransType, int bIsElderly, int bIsStudent, flo
     if( pPass && pPerRidePass && ulId )
     {
 		//Add the currency value amount.
-		pPerRidePass->ulCurrentValue = *ulInputCurrencyAmount;
+		pPerRidePass->ulCurrentValue = (unsigned long)(*ulInputCurrencyAmount);
 
 		//Set the type and the pointer to the specific pass
 		pPass->ulTypeOfPass = PAY_PER_RIDE;

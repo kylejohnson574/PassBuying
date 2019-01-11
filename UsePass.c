@@ -23,7 +23,7 @@ int usePerRidePass(unsigned long ulId, unsigned int uiTransType, int bIsWeekend,
 		if (totalCosts <= pRide->ulCurrentValue)
 		{
 			//Take out the money and return true
-			pRide->ulCurrentValue = pRide->ulCurrentValue - totalCosts;
+			pRide->ulCurrentValue = (unsigned long)(pRide->ulCurrentValue - totalCosts);
 			bReturn = 1;
 		}
 	}

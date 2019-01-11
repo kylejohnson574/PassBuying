@@ -134,7 +134,7 @@ unsigned short getRenewPrice(unsigned long *Id, PASS_TYPE *type, float *price, u
 // Add money to a per ride pass
 unsigned short addCurrencyToPass(unsigned long *Id, float moneyIn)
 {
-	unsigned short bReturn = addCurrencyToPerRidePass(moneyIn, *Id, 0x00);
+	unsigned short bReturn = addCurrencyToPerRidePass((unsigned long)moneyIn, *Id, 0x00);
 	return bReturn;
 }
 
